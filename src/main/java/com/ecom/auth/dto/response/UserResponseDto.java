@@ -1,4 +1,4 @@
-package com.ecom.auth.dto;
+package com.ecom.auth.dto.response;
 
 import com.ecom.auth.entities.UserRole;
 import lombok.Data;

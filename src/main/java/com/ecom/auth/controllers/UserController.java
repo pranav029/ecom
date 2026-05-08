@@ -1,7 +1,7 @@
 package com.ecom.auth.controllers;
 
-import com.ecom.auth.dto.UserRequestDto;
-import com.ecom.auth.dto.UserResponseDto;
+import com.ecom.auth.dto.request.UserRequestDto;
+import com.ecom.auth.dto.response.UserResponseDto;
 import com.ecom.auth.entities.User;
 import com.ecom.auth.services.UserService;
 import lombok.RequiredArgsConstructor;

@@ -10,7 +10,7 @@ import lombok.experimental.SuperBuilder;
 import java.util.HashSet;
 import java.util.Set;
 
-@EqualsAndHashCode(callSuper = true)
+//@EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -29,4 +29,22 @@ public class Tenant extends AbstractEntity {
 
     @OneToMany(mappedBy = "tenant", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<User> users = new HashSet<>();
+
+
+    /*for Onboarding flow*/
+
+    @Column(name = "admin_username", nullable = false)
+    private String adminUsername;
+
+    @Column(name = "admin_email", nullable = false)
+    private String adminEmail;
+
+    @Column(name = "admin_password", nullable = false)
+    private String adminPassword;
+
+    @Column(name = "admin_first_name", nullable = false)
+    private String adminFirstName;
+
+    @Column(name = "admin_last_name", nullable = false)
+    private String adminLastName;
 }

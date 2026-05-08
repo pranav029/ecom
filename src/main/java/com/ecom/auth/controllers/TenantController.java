@@ -1,8 +1,8 @@
 package com.ecom.auth.controllers;
 
-import com.ecom.auth.dto.TenantRequestDto;
-import com.ecom.auth.dto.TenantResponseDto;
-import com.ecom.auth.entities.Tenant;
+import com.ecom.auth.common.mappers.MapperUtil;
+import com.ecom.auth.dto.request.TenantUpdateRequestDto;
+import com.ecom.auth.dto.response.TenantResponseDto;
 import com.ecom.auth.services.TenantService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,33 +20,27 @@ public class TenantController {
     @GetMapping
     public List<TenantResponseDto> getAll() {
         return tenantService.findAll().stream()
-                .map(tenantService::toResponseDto)
+                .map(MapperUtil::toResponseDto)
                 .collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<TenantResponseDto> getById(@PathVariable String id) {
         return tenantService.findById(id)
-                .map(tenantService::toResponseDto)
+                .map(MapperUtil::toResponseDto)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping
-    public TenantResponseDto create(@RequestBody TenantRequestDto dto) {
-        Tenant tenant = tenantService.fromRequestDto(dto);
-        return tenantService.toResponseDto(tenantService.save(tenant));
+    @PostMapping("/approve/{tenantId}")
+    public ResponseEntity<Void> approveTenant(@PathVariable("tenantId") String tenantId) {
+        tenantService.approveTenant(tenantId);
+        return ResponseEntity.ok().build();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<TenantResponseDto> update(@PathVariable String id, @RequestBody TenantRequestDto dto) {
-        return tenantService.findById(id)
-                .map(existing -> {
-                    Tenant updated = tenantService.fromRequestDto(dto);
-                    updated.setId(id);
-                    return ResponseEntity.ok(tenantService.toResponseDto(tenantService.save(updated)));
-                })
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<TenantResponseDto> update(@PathVariable String id, @RequestBody TenantUpdateRequestDto dto) {
+        return ResponseEntity.ok(tenantService.update(id, dto));
     }
 
     @DeleteMapping("/{id}")
