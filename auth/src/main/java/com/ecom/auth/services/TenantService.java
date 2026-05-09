@@ -28,6 +28,8 @@ public class TenantService {
     public void registerTenant(RegisterTenantRequest request) {
         Tenant tenant = MapperUtil.toTenant(request);
 
+        checkIfTenantNameAndCodeAlreadyExists(tenant.getCompanyName(), tenant.getCompanyCode());
+
         tenantRepository.save(tenant);
     }
 
@@ -37,16 +39,30 @@ public class TenantService {
                 .orElseThrow(() -> new RequestException("Tenant not found"));
 
         checkIfTenantAlreadyActive(tenant);
+        checkIfTenantProvisioning(tenant);
 
-        tenant.setStatus(TenantStatus.SUSPENDED);
-        tenantRepository.save(tenant);
+        if (tenant.getStatus().equals(TenantStatus.SUSPENDED)) {
+            tenant.setStatus(TenantStatus.ACTIVE);
+            tenantRepository.save(tenant);
 
-        createAdminUserForTenant(tenant);
+            return;
+        }
+
+        if (tenant.getStatus().equals(TenantStatus.PENDING)) {
+            tenant.setStatus(TenantStatus.PROVISIONING);
+            tenantRepository.save(tenant);
+
+            //TRIGGER KAFKA EVENT TO PROVISION ALL SERVICES
+
+            createAdminUserForTenant(tenant);
+        }
     }
 
     public TenantResponseDto update(String tenantId, TenantUpdateRequestDto tenant) {
         Tenant existingTenant = tenantRepository.findById(tenantId)
                 .orElseThrow(() -> new RequestException("Tenant not found"));
+
+        checkIfTenantNameAndCodeAlreadyExists(tenant.getCompanyName(), tenant.getCompanyCode());
 
         existingTenant.setCompanyName(tenant.getCompanyName());
         existingTenant.setCompanyCode(tenant.getCompanyCode());
@@ -92,5 +108,21 @@ public class TenantService {
     private void checkIfTenantAlreadyActive(Tenant tenant) {
         if (tenant.getStatus().equals(TenantStatus.ACTIVE))
             throw new BusinessException("Tenant is already active");
+    }
+
+    private void checkIfTenantProvisioning(Tenant tenant) {
+        if (tenant.getStatus().equals(TenantStatus.PROVISIONING))
+            throw new BusinessException("Tenant provisioning already in progress");
+    }
+
+    private void checkIfTenantNameAndCodeAlreadyExists(String companyName, String companyCode) {
+        Optional<Tenant> tenantByName = tenantRepository.findByCompanyName(companyName);
+        Optional<Tenant> tenantByCode = tenantRepository.findByCompanyCode(companyCode);
+
+        if (tenantByName.isPresent())
+            throw new BusinessException("Tenant with the same company name already exists");
+
+        if (tenantByCode.isPresent())
+            throw new BusinessException("Tenant with the same company code already exists");
     }
 }
