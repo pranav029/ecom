@@ -18,3 +18,8 @@ spring:
   sql:
     init:
       platform: postgres
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
