@@ -4,12 +4,13 @@ import com.ecom.auth.common.mappers.MapperUtil;
 import com.ecom.auth.dto.request.TenantUpdateRequestDto;
 import com.ecom.auth.dto.response.TenantResponseDto;
 import com.ecom.auth.services.TenantService;
+import com.ecom.core.dto.ApiResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -18,18 +19,20 @@ public class TenantController {
     private final TenantService tenantService;
 
     @GetMapping
-    public List<TenantResponseDto> getAll() {
-        return tenantService.findAll().stream()
+    public ResponseEntity<ApiResponse<List<TenantResponseDto>>> getAll() {
+        var response = tenantService.findAll().stream()
                 .map(MapperUtil::toResponseDto)
-                .collect(Collectors.toList());
+                .toList();
+        return ApiResponse.successResponseEntity("Tenants retrieved successfully", response, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<TenantResponseDto> getById(@PathVariable String id) {
-        return tenantService.findById(id)
-                .map(MapperUtil::toResponseDto)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    @ResponseStatus(HttpStatus.OK)
+    public ApiResponse<TenantResponseDto> getById(@PathVariable String id) {
+        var response = tenantService.findById(id)
+                .map(MapperUtil::toResponseDto).get();
+
+        return ApiResponse.success("Tenant retrieved successfully", response);
     }
 
     @PostMapping("/approve/{tenantId}")

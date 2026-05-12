@@ -1,5 +1,6 @@
 package com.ecom.auth.entities;
 
+import com.ecom.core.entities.AbstractEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

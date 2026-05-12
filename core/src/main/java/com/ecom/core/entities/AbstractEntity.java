@@ -1,4 +1,4 @@
-package com.ecom.auth.entities;
+package com.ecom.core.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

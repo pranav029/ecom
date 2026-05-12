@@ -1,3 +1,3 @@
 rootProject.name = "ecom"
-include("auth", "product")
+include("auth", "product","core")
 

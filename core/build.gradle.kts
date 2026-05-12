@@ -1,6 +1,10 @@
-group = "org.ecom"
+group = "com.ecom"
 version = "0.0.1-SNAPSHOT"
-description = "product"
+description = "common-core"
+
+plugins{
+    id("java-library")
+}
 
 java {
     toolchain {
@@ -10,7 +14,9 @@ java {
 
 
 dependencies {
-    implementation(project(":core"))
+    api("org.springframework.boot:spring-boot-starter-data-jpa")
+    api("org.springframework.boot:spring-boot-starter-webmvc")
+    api("org.springdoc:springdoc-openapi-starter-webmvc-ui:3.0.2")
     compileOnly("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok")
     testImplementation("org.springframework.boot:spring-boot-starter-webmvc-test")
