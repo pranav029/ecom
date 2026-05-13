@@ -1,0 +1,25 @@
+server:
+    port: 8082
+spring:
+  datasource:
+    url: ${POSTGRES_URL:jdbc:postgresql://localhost:5432/ecomdb}
+    username: ${POSTGRES_USER:admin}
+    password: ${POSTGRES_PASSWORD:admin}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc:
+          time_zone: Asia/Kolkata
+  sql:
+    init:
+      platform: postgres
+
+provision:
+  multitenancy:
+    enabled: true
+    entity-package: com.ecom.product.entities

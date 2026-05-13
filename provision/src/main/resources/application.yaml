@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: provision
+  flyway:
+    enabled: false
+
+provision:
+  multitenancy:
+    enabled: false
+
+
