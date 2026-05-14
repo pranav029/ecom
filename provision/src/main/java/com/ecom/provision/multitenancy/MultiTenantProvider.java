@@ -1,5 +1,6 @@
 package com.ecom.provision.multitenancy;
 
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.engine.jdbc.connections.spi.MultiTenantConnectionProvider;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
@@ -9,6 +10,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 @Component
+@Slf4j
 @ConditionalOnProperty(name = "provision.multitenancy.enabled", havingValue = "true")
 public class MultiTenantProvider implements MultiTenantConnectionProvider<String> {
     private final DataSource dataSource;
@@ -30,17 +32,28 @@ public class MultiTenantProvider implements MultiTenantConnectionProvider<String
 
     @Override
     public Connection getConnection(String tenantIdentifier) throws SQLException {
-        Connection connection = getAnyConnection();
+        log.debug("Getting connection for tenant: {}", tenantIdentifier);
+        final Connection connection = getAnyConnection();
         try {
-            connection.setSchema(tenantIdentifier); // switch schema dynamically
-        } catch (SQLException e) {
-            throw new RuntimeException("Could not alter schema to " + tenantIdentifier, e);
+            if (tenantIdentifier != null && !tenantIdentifier.equals("public") ) {
+                String sql = String.format("SET search_path TO %s, public",tenantIdentifier);
+                connection.createStatement().execute(sql);
+                log.trace("Set search_path to: {}", tenantIdentifier);
+            }
+        } catch (final SQLException e) {
+            log.error("Error getting connection for tenant: {}", tenantIdentifier, e);
+            throw e;
         }
         return connection;
     }
 
     @Override
     public void releaseConnection(String tenantIdentifier, Connection connection) throws SQLException {
+        try {
+            connection.createStatement().execute("SET search_path TO public");
+        } catch (final SQLException e) {
+            log.error("Error getting connection for tenant: {}", tenantIdentifier, e);
+        }
         connection.close();
     }
 
