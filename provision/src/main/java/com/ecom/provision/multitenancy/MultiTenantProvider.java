@@ -1,4 +1,4 @@
-package com.ecom.provision.prov;
+package com.ecom.provision.multitenancy;
 
 import org.hibernate.engine.jdbc.connections.spi.MultiTenantConnectionProvider;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -25,7 +25,7 @@ public class MultiTenantProvider implements MultiTenantConnectionProvider<String
 
     @Override
     public void releaseAnyConnection(Connection connection) throws SQLException {
-
+        connection.close();
     }
 
     @Override

@@ -1,6 +1,8 @@
 server:
     port: 8082
 spring:
+  config:
+    import: optional:file:product/.env[.properties]
   datasource:
     url: ${POSTGRES_URL:jdbc:postgresql://localhost:5432/ecomdb}
     username: ${POSTGRES_USER:admin}
@@ -23,3 +25,6 @@ provision:
   multitenancy:
     enabled: true
     entity-package: com.ecom.product.entities
+  api:
+    enabled: true
+    identifier: product

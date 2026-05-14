@@ -8,7 +8,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
-import com.ecom.provision.prov.MultiTenantProvider;
+import com.ecom.provision.multitenancy.MultiTenantProvider;
 
 import javax.sql.DataSource;
 import java.util.HashMap;

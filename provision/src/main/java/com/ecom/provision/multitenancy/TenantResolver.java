@@ -1,4 +1,4 @@
-package com.ecom.provision.prov;
+package com.ecom.provision.multitenancy;
 
 import org.hibernate.context.spi.CurrentTenantIdentifierResolver;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;

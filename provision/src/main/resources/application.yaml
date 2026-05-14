@@ -3,6 +3,8 @@ spring:
     name: provision
   flyway:
     enabled: false
+    database-type: postgresql
+
 
 provision:
   multitenancy:

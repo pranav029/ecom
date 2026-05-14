@@ -11,7 +11,11 @@ java {
 dependencies {
 	implementation(project(":core"))
 //	implementation("org.springframework.boot:spring-boot-starter-flyway")
+	implementation("org.flywaydb:flyway-core:12.6.1")
+	runtimeOnly("org.flywaydb:flyway-database-postgresql:12.6.1")
 //	testImplementation("org.springframework.boot:spring-boot-starter-flyway-test")
+	compileOnly("org.projectlombok:lombok")
+	annotationProcessor("org.projectlombok:lombok")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 	testImplementation("org.springframework.boot:spring-boot-starter-webmvc-test")
 }
