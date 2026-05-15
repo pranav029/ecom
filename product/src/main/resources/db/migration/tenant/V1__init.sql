@@ -22,17 +22,11 @@ CREATE TABLE products (
 
 CREATE TABLE variants (
     id VARCHAR(255) PRIMARY KEY,
-    sku VARCHAR(255) NOT NULL,
-    create_at TIMESTAMP NOT NULL,
-    updated_at TIMESTAMP NOT NULL
-);
-
-CREATE TABLE product_variant (
+    sku VARCHAR(255) NOT NULL UNIQUE,
     product_id VARCHAR(255) NOT NULL,
-    variant_id VARCHAR(255) NOT NULL,
-    PRIMARY KEY (product_id, variant_id),
-    CONSTRAINT fk_product FOREIGN KEY (product_id) REFERENCES products(id),
-    CONSTRAINT fk_variant FOREIGN KEY (variant_id) REFERENCES variants(id)
+    create_at TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP NOT NULL,
+    CONSTRAINT fk_variant_product FOREIGN KEY (product_id) REFERENCES products(id)
 );
 
 CREATE TABLE attributes (

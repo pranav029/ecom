@@ -1,5 +1,6 @@
 package com.ecom.product.entities;
 
+import com.ecom.core.entities.AbstractEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,7 +21,4 @@ public class Category extends AbstractEntity {
 
     @Column(name = "description", nullable = false)
     private String description;
-
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
-    private Set<Product> products;
 }
