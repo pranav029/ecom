@@ -1,4 +1,4 @@
-package com.ecom.auth.exception;
+package com.ecom.core.exception;
 
 public class BusinessException extends RuntimeException {
 

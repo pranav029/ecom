@@ -10,17 +10,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @RestControllerAdvice
-public class GlobalExceptionHandler {
-
-    @ExceptionHandler(RequestException.class)
-    public ResponseEntity<String> handleResourceNotFoundException(RequestException ex) {
-        return ResponseEntity.status(ex.getStatus()).body(ex.getMessage());
-    }
-
-    @ExceptionHandler(BusinessException.class)
-    public ResponseEntity<String> handleResourceNotFoundException(BusinessException ex) {
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
-    }
+public class AuthExceptionHandler {
 
     @ExceptionHandler(NoSuchElementException.class)
     public ResponseEntity<?> handleOptionalError(NoSuchElementException ex) {

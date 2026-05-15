@@ -1,0 +1,10 @@
+package com.ecom.core.events;
+
+public enum ProvisionEvent {
+    TENANT_CREATED,
+    PROVISION_COMPLETED,
+    PROVISION_FAILED,
+    PROVISION_ROLLBACK,
+    PROVISION_ROLLBACK_COMPLETED,
+    PROVISION_ROLLBACK_FAILED,
+}
