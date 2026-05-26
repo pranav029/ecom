@@ -2,18 +2,18 @@ package com.ecom.product.services;
 
 import com.ecom.product.entities.Category;
 import com.ecom.product.repositories.CategoryRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class CategoryService {
     private final CategoryRepository categoryRepository;
 
-    public CategoryService(CategoryRepository categoryRepository) {
-        this.categoryRepository = categoryRepository;
-    }
+
 
     public List<Category> findAll() {
         return categoryRepository.findAll();

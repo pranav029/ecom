@@ -13,4 +13,10 @@ public class RequestException extends RuntimeException {
         this.message = message;
         this.status = HttpStatus.BAD_REQUEST;
     }
+
+    public RequestException(String message, HttpStatus status) {
+        super(message);
+        this.message = message;
+        this.status = status;
+    }
 }
