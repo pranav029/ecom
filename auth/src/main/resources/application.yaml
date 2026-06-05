@@ -1,10 +1,12 @@
+server:
+  port: 8082
 spring:
   config:
     import: optional:file:auth/.env[.properties]
   application:
-    name: ecom-auth
+    name: auth
   datasource:
-    url: ${POSTGRES_URL:jdbc:postgresql://localhost:5432/ecomdb}
+    url: ${POSTGRES_URL:jdbc:postgresql://localhost:5432/authdb}
     username: ${POSTGRES_USER:postgres}
     password: ${POSTGRES_PASSWORD:postgres}
     driver-class-name: org.postgresql.Driver

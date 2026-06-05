@@ -1,10 +1,12 @@
 server:
-    port: 8082
+  port: 8083
 spring:
+  application:
+    name: product
   config:
     import: optional:file:product/.env[.properties]
   datasource:
-    url: ${POSTGRES_URL:jdbc:postgresql://localhost:5432/ecomdb}
+    url: ${POSTGRES_URL:jdbc:postgresql://localhost:5432/productdb}
     username: ${POSTGRES_USER:admin}
     password: ${POSTGRES_PASSWORD:admin}
     driver-class-name: org.postgresql.Driver
