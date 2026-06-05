@@ -1,3 +1,4 @@
+val bootModules = listOf("auth", "order", "product","inventory")
 plugins {
     java
     id("org.springframework.boot") version "4.0.6"
@@ -7,7 +8,7 @@ plugins {
 allprojects {
     group = "com.ecom"
     version = "0.0.1-SNAPSHOT"
-    repositories{
+    repositories {
         mavenCentral()
     }
 }
@@ -19,7 +20,10 @@ subprojects {
 
 //    Plugins in gradle don't get inherited by default, so we need to apply them in each subproject
     apply(plugin = "java")
-    apply(plugin = "org.springframework.boot")
     apply(plugin = "io.spring.dependency-management")
+
+    if (bootModules.contains(name)) {
+        apply(plugin = "org.springframework.boot")
+    }
 }
 
