@@ -1,10 +1,13 @@
 package com.ecom.core.events;
 
-public enum ProvisionEvent {
-    TENANT_CREATED,
-    PROVISION_COMPLETED,
-    PROVISION_FAILED,
-    PROVISION_ROLLBACK,
-    PROVISION_ROLLBACK_COMPLETED,
-    PROVISION_ROLLBACK_FAILED,
+import com.ecom.core.eventTypes.ProvisionEventType;
+import lombok.Builder;
+
+@Builder
+public record ProvisionEvent(
+        ProvisionEventType type,
+        String tenantId,
+        String companyName,
+        String companyCode
+) {
 }

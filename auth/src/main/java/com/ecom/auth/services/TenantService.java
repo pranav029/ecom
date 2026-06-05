@@ -8,12 +8,16 @@ import com.ecom.auth.entities.Tenant;
 import com.ecom.auth.entities.TenantStatus;
 import com.ecom.auth.entities.User;
 import com.ecom.auth.entities.UserRole;
+import com.ecom.core.events.ProvisionEvent;
+import com.ecom.core.constants.KafkaTopics;
+import com.ecom.core.eventTypes.ProvisionEventType;
 import com.ecom.core.exception.BusinessException;
 import com.ecom.core.exception.RequestException;
 import com.ecom.auth.repositories.TenantRepository;
 import com.ecom.auth.repositories.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,6 +28,7 @@ import java.util.Optional;
 public class TenantService {
     private final TenantRepository tenantRepository;
     private final UserRepository userRepository;
+    private final KafkaTemplate<String, ProvisionEvent> kafkaTemplate;
 
     public void registerTenant(RegisterTenantRequest request) {
         Tenant tenant = MapperUtil.toTenant(request);
@@ -53,6 +58,14 @@ public class TenantService {
             tenantRepository.save(tenant);
 
             //TRIGGER KAFKA EVENT TO PROVISION ALL SERVICES
+            ProvisionEvent event = ProvisionEvent.builder()
+                    .type(ProvisionEventType.TENANT_CREATED)
+                    .tenantId(tenantId)
+                    .companyName(tenant.getCompanyName())
+                    .companyCode(tenant.getCompanyCode())
+                    .build();
+
+            kafkaTemplate.send(KafkaTopics.TENANT_PROVISION_TOPIC, event);
 
             createAdminUserForTenant(tenant);
         }

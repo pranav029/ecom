@@ -1,6 +1,6 @@
-package com.ecom.core.events;
+package com.ecom.core.eventTypes;
 
-public enum OrderEvent {
+public enum OrderEventType {
     ORDER_CREATED,
     ORDER_PENDING,
     ORDER_CONFIRMED,
