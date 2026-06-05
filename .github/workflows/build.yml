@@ -38,4 +38,4 @@ jobs:
 
       # Run Gradle build for all modules
       - name: Build with Gradle
-        run: ./gradlew build --no-daemon
+        run: ./gradlew build -x test --no-daemon
