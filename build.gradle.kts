@@ -7,12 +7,15 @@ plugins {
 allprojects {
     group = "com.ecom"
     version = "0.0.1-SNAPSHOT"
+    repositories{
+        mavenCentral()
+    }
 }
 
 subprojects {
-    repositories {
-        mavenCentral()
-    }
+//    repositories {
+//        mavenCentral()
+//    }
 
 //    Plugins in gradle don't get inherited by default, so we need to apply them in each subproject
     apply(plugin = "java")
