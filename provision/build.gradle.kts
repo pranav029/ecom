@@ -16,8 +16,8 @@ dependencies {
     implementation("org.flywaydb:flyway-core:12.6.1")
     runtimeOnly("org.flywaydb:flyway-database-postgresql:12.6.1")
 //	testImplementation("org.springframework.boot:spring-boot-starter-flyway-test")
-    compileOnly("org.projectlombok:lombok")
-    annotationProcessor("org.projectlombok:lombok")
+    compileOnly("org.projectlombok:lombok:1.18.46")
+    annotationProcessor("org.projectlombok:lombok:1.18.46")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     testImplementation("org.springframework.boot:spring-boot-starter-webmvc-test")
 }

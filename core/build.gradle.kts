@@ -18,10 +18,10 @@ dependencies {
     api("org.springframework.boot:spring-boot-starter-webmvc")
     api("org.springdoc:springdoc-openapi-starter-webmvc-ui:3.0.2")
     api("org.springframework.boot:spring-boot-starter-kafka")
-    compileOnly("org.projectlombok:lombok")
-    annotationProcessor("org.projectlombok:lombok")
+    compileOnly("org.projectlombok:lombok:1.18.46")
+    annotationProcessor("org.projectlombok:lombok:1.18.46")
     testImplementation("org.springframework.boot:spring-boot-starter-webmvc-test")
-    testCompileOnly("org.projectlombok:lombok")
+    testCompileOnly("org.projectlombok:lombok:1.18.46")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     testAnnotationProcessor("org.projectlombok:lombok")
 }
