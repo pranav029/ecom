@@ -1,5 +1,5 @@
 -- V1__init.sql
--- Flyway migration for Tenant, User and their relationships
+-- Flyway migration for Tenant, User, Provision and their relationships
 
 CREATE TABLE tenants (
     id VARCHAR(255) PRIMARY KEY,
@@ -27,5 +27,16 @@ CREATE TABLE users (
     create_at TIMESTAMP NOT NULL,
     updated_at TIMESTAMP NOT NULL,
     CONSTRAINT fk_user_tenant FOREIGN KEY (tenant_id) REFERENCES tenants(id)
+);
+
+CREATE TABLE provision (
+    id VARCHAR(255) PRIMARY KEY,
+    tenant_id VARCHAR(255) NOT NULL,
+    company_code VARCHAR(255) NOT NULL,
+    company_name VARCHAR(255) NOT NULL,
+    service_type VARCHAR(255) NOT NULL,
+    state VARCHAR(255) NOT NULL,
+    create_at TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP NOT NULL
 );
 
